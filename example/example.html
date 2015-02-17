@@ -1,0 +1,64 @@
+<style>
+
+  ui-view {
+    position: relative;
+  }
+
+  .container {
+    background-color: lightblue;
+    border-radius: 8px;
+    padding: 10px;
+
+    margin: 10px;
+    margin-left: -10px;
+    width: 100%;
+    float: left;
+    min-height: 300px;
+  }
+
+  .one {
+    float: left;
+    width: 75%;
+    background-color: lightyellow;
+    margin-left: 10px;
+  }
+
+  .two {
+    float: right;
+    width: 75%;
+    background-color: lightgreen;
+  }
+
+  .two .container {
+    color: white;
+    float: left;
+    width: 50%;
+    margin-left: 10px;
+  }
+
+  .two-a {
+    background-color: darkseagreen;
+  }
+
+  .two-b {
+    background-color: crimson;
+  }
+
+  html, body {
+    font-family: "Geneva";
+    margin: 5px;
+    padding: 5px;
+
+  }
+</style>
+
+<div class="container">
+
+  <h1>UI View Spinner</h1>
+
+  <div>
+    <a ui-sref="example.one">Down one level</a>
+    <a ui-sref="example.two">Down more levels</a>
+  </div>
+  <ui-loading-view size="large" root-state="example"></ui-loading-view>
+</div>

@@ -1,0 +1,39 @@
+{
+  "name": "angular-ui-view-spinner",
+  "description": "A declarative way to display loading spinners for ui-router resolves the way you want them to appear.",
+  "authors": [
+    "Robert Pocklington",
+    "rpocklin@gmail.com"
+  ],
+  "homepage": "https://github.com/rpocklin/angular-ui-view-spinner",
+  "repository": "git://github.com/rpocklin/angular-ui-view-spinner.git",
+  "version": "1.0.0",
+  "license": "MIT",
+  "main": "src/angular-ui-view-spinner.js",
+  "keywords": [
+    "angular, ui router, spinner, loading, wait, resolve"
+  ],
+  "ignore": [
+    "**/.*",
+    "*.yml",
+    ".jshintrc",
+    "node_modules",
+    "bower_components",
+    "example",
+    "Gruntfile.js",
+    "package.json",
+    "component.json",
+    "bower.json",
+    "karma.conf.js"
+  ],
+  "dependencies": {
+    "angular": "^1.2.26",
+    "angular-spinner": "^0.6.1",
+    "angular-ui-router": "^0.2.13"
+  },
+  "devDependencies": {
+    "angular-mocks": "^1.2.26",
+    "sinon": "1.9.0",
+    "jasmine-sinon": "0.3.1"
+  }
+}

@@ -1,0 +1,43 @@
+.view-loading-spinner-container {
+
+  /* a good offset to start with */
+  margin-top: 50px;
+
+  /* ensure it sits above all content */
+  z-index: 10000;
+
+  /* reference position of spinner */
+  position: relative;
+
+  .view-loading-spinner {
+    /* centers spinner irrespective of its size */
+    transform: translate(-50%, -50%);
+    left: 50%;
+    top: 50%;
+    position: absolute;
+  }
+}
+
+/* use to fade in and out sections of HTML using the ng-hide directive */
+.obscure {
+  opacity: 0;
+}
+
+/* smooth transitions */
+.fadein {
+  opacity: 1;
+  transition: all 0.5s ease;
+
+  &.ng-hide {
+    opacity: 0;
+    display: block !important;
+  }
+
+  &.delay-fadein {
+    transition: all 1.0s 0.3s ease !important;
+  }
+
+  &.no-fadeout.ng-hide {
+    transition: none !important;
+  }
+}
