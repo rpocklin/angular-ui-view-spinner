@@ -3,7 +3,7 @@
 A declarative, powerful drop-in addition to UI Router, enabling spinners to be shown when executing `resolves` before
 the route change is complete.
 
-*Motivation*: Global spinners suck, UX and humans desire to know what part of the screen is loading.  UI Router gives
+**Motivation**: Global spinners suck, UX and humans desire to know what part of the screen is loading.  UI Router gives
 us the hooks we need and this directive is the easiest *drop-in* replacement to complicated or global loading indicators.
 
 Most importantly, this works as you nest multiple `<ui-view>` elements, and comes with a good set of defaults to
@@ -33,12 +33,18 @@ not show if the data is loaded within a certain amount of time (avoids spinner f
 
   `var myapp = angular.module('myapp', ['angular-ui-view-spinner']);`
 
+1. Ensure that the other Angular.js module dependencies are included:
+
+  `var myapp = angular.module('myapp', ['angularSpinner', 'ui.router', 'angular-ui-view-spinner']);`
+
 ## Creating the Directive
 
-1. Replace `<ui-view ...>` or `<div ui-view ...>` with `<ui-loading-view ...>` or `<div ui-loading-view ...>`.
-1. Define the root-state for that <ui-loading-view> based on the parents route.
-1. Review / define the spinner presets or change them to suite.
-1. Spinner will appear on any view where you have `resolve:` defined with an async loader, whether it's one or many.
+1. [ required ] Replace `<ui-view ...>` or `<div ui-view ...>` with `<ui-loading-view ...>` or `<div ui-loading-view ...>`.
+1. [ required ] Define the root-state for that `<ui-loading-view>` based on the parents route.
+1. [ optional ] Specify the preset size of the spinner `size="small | medium | large"`.
+1. [ optional ] Customise the `angularSpinner` spinner dimensions directly: `spinner-size="{ radius: 50, width: 10, length: 60 }"`.
+
+NOTE: The spinner will appear on any view where you have `resolve:` defined with an async loader, whether it's one async request or many.
 
 Complete (minimal) example:
 
@@ -57,7 +63,7 @@ Complete (minimal) example:
 - You can use either the SASS styles directly file under `/src` or the compiled CSS files, up to you :)
 - You may wish to customise the `margin-top` of the spinner to the `<ui-view>` containers,
   or use flex-box or another method to vertically center the spinner but it depends which browsers / versions you are 
-  targeting, the default is `50px`.
+  targeting - the default is `margin-top: 50px`.
 
 ## Running Locally
 
@@ -72,7 +78,7 @@ Complete (minimal) example:
 
 1. Fork it
 2. Create your feature branch (`git checkout -b my-new-feature`)
-3. Make your changes, run `grunt karma` to ensure all tests pass.  (Ideally add more tests!)
+3. Make your changes, run `grunt` to ensure all tests pass.  (Ideally add more tests!)
 3. Commit your changes (`git commit -am 'Added some feature'`)
 4. Push to the branch (`git push origin my-new-feature`)
 5. Create a new Pull Request
@@ -83,10 +89,7 @@ Complete (minimal) example:
 1.0.0 Initial release
 
 ## TODO
-
-- Add some tests
-- Customise configuration of the spinner size / spin-speed.
-- Add flag to hide the views you are leaving when navigating to sibling or parent views.
+1. Your feature here
 
 ## License
 
