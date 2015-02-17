@@ -1,6 +1,6 @@
 {
   "name": "angular-ui-view-spinner",
-  "description": "A declarative way to display loading spinners for ui-router resolves the way you want them to appear.",
+  "description": "A declarative way to display loading spinners in Angular.js for ui-router resolves into their target ui-view pane.",
   "authors": [
     "Robert Pocklington",
     "rpocklin@gmail.com"
