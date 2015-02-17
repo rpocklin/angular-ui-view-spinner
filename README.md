@@ -35,7 +35,7 @@ not show if the data is loaded within a certain amount of time (avoids spinner f
 
 ## Creating the Directive
 
-1. Replace <ui-view ...> or <div ui-view ...> with <ui-loading-view...>
+1. Replace `<ui-view ...>` or `<div ui-view ...>` with `<ui-loading-view ...>` or `<div ui-loading-view ...>`.
 1. Define the root-state for that <ui-loading-view> based on the parents route.
 1. Review / define the spinner presets or change them to suite.
 1. Spinner will appear on any view where you have `resolve:` defined with an async loader, whether it's one or many.
