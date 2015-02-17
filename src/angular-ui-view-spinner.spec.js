@@ -1,15 +1,13 @@
 (function() {
   'use strict';
 
-  var xhrDelay = 500;
+  var defer;
 
   var asyncResolve = {
     async: function() {
       return defer.promise;
     }
   };
-
-  var defer;
 
   beforeEach(
     function() {
@@ -21,22 +19,26 @@
         function($stateProvider) {
           $stateProvider.state(
             'menu', {
-              url: '/menu'
+              url: '/menu',
+              template: '<div>menu</div>'
               /* no resolve */
             }
           ).state(
+            'other', {
+              url: '/other',
+              template: '<div>menu</div>',
+              resolve: asyncResolve
+            }
+          ).state(
             'menu.route1', {
-              url: '/route1',
+              url: '/1',
+              template: '<div>menu</div>',
               resolve: asyncResolve
             }
           ).state(
-            'menu.route.a', {
-              url: '/a',
-              resolve: asyncResolve
-            }
-          ).state(
-            'menu.route2.b', {
-              url: '/b2',
+            'menu.route2', {
+              url: '/2',
+              template: '<div>menu</div>',
               resolve: asyncResolve
             }
           );
@@ -56,20 +58,16 @@
   describe(
     'Directive : UI Router : View Spinner', function() {
 
-      var root_scope, isolate_scope, scope, directive_scope, view, element, state, spy;
-      var createView, get_current_state, spinnerIsHidden, spinnerIsVisible;
+      var root_scope, scope, directive_scope, view, element, state, spy, q;
+      var createView, get_current_state, spinnerIsHidden, spinnerIsVisible, viewIsVisible;
       var $ngView;
-      var params = {};
-      var options = {};
-      var timeout;
 
       beforeEach(
         inject(
-          function($rootScope, $state, $templateCache, $timeout, $q) {
+          function($rootScope, $state, $templateCache, $q) {
 
+            q = $q;
             defer = $q.defer();
-
-            timeout = $timeout;
 
             createView = function(html, scope) {
               element = angular.element(view);
@@ -100,29 +98,22 @@
 
             spinnerIsHidden = function() {
               return $ngView.find('.view-loading-spinner').hasClass('ng-hide');
-            }
+            };
+
+            viewIsVisible = function() {
+              return !$ngView.find('div[ui-view]').find('div[ui-view]').hasClass('ng-hide');
+            };
 
             spinnerIsVisible = function() {
               return !spinnerIsHidden();
-            }
+            };
 
-            //spy = this.sandbox.spy(state, 'go');
-            //update_tabs_spy = this.sandbox.spy(isolate_scope, 'update_tabs');
+            expect(spinnerIsHidden()).toBeTruthy();
 
-            console.log(directive_scope.isNextRouteLoading());
             state.go('menu');
-            console.log(directive_scope.isNextRouteLoading());
             scope.$digest();
-            scope.$digest();
-            scope.$digest();
-            scope.$digest();
-            console.log(directive_scope.isNextRouteLoading());
-            expect(directive_scope.showSpinner()).toBeFalsy();
 
-            //expect(directive_scope.showSpinner()).toBeTruthy();
-            expect(directive_scope.showSpinner()).toBeFalsy();
-            //expect(spinnerIsHidden()).toBeTruthy();
-
+            expect(spinnerIsHidden()).toBeTruthy();
           }
         )
       );
@@ -133,74 +124,57 @@
 
       it('should show the spinner when a new child route is being loaded', function() {
 
-        state.go('menu.route1');
+        expect(spinnerIsHidden()).toBeTruthy();
 
+        state.go('menu.route1');
         scope.$digest();
 
-        //expect(spinnerIsVisible()).toBeTruthy();
-        //expect(directive_scope.isSpinnerEnabled()).toBeTruthy();
+        expect(spinnerIsVisible()).toBeTruthy();
 
         expect(state.current.name).not.toEqual('menu.route1');
 
         defer.resolve();
         scope.$digest();
 
-        //console.log($ngView.find('.view-loading-spinner'));
-        //expect(directive_scope.isSpinnerEnabled()).toBeFalsy();
-        //expect(spinnerIsHidden()).toBeTruthy();
-        //expect(state.current.name).toEqual('menu.route1');
+        expect(viewIsVisible()).toBeTruthy();
+
+        expect(state.current.name).toEqual('menu.route1');
       });
 
-      xit('should show the spinner when a new sibling route is being loaded', function() {
-        state.go('menu');
-        expect(spinnerIsHidden()).toBeTruthy();
+      it('should show the spinner when a new sibling route is being loaded', function() {
+
         state.go('menu.route1');
-        expect(spinnerIsVisible()).toBeFalsy();
+
+        defer.resolve();
+
+        defer = q.defer();
+        state.go('menu.route2');
+
+        expect(state.current.name).not.toEqual('menu.route2');
+
+        defer.resolve();
+        scope.$digest();
+
+        expect(viewIsVisible()).toBeTruthy();
+
+        expect(state.current.name).toEqual('menu.route2');
       });
 
-      //it('should route to the first entry in tabConfiguration array by default', function() {
-      //  expect(get_current_state()).toEqual(scope.tabConfiguration[0].route);
-      //});
-      //
-      //it('should not change the route when selecting the current tab', function() {
-      //
-      //  var previous_state = get_current_state();
-      //
-      //  var current_active_tab_index = _.indexOf(scope.tabConfiguration, _.findWhere(scope.tabConfiguration, {
-      //    route: previous_state
-      //  }));
-      //
-      //  $ngView.find('a').eq(current_active_tab_index).click();
-      //  timeout.flush();
-      //
-      //  expect(get_current_state()).toEqual(previous_state);
-      //  expect(spy.notCalled).toBeTruthy();
-      //});
-      //
-      //it('should change the route and update the tabs when selecting a different tab', function() {
-      //
-      //  var previous_state = get_current_state();
-      //
-      //  var another_tab = non_active_tab();
-      //  var non_active_tab_index = _.indexOf(scope.tabConfiguration, another_tab);
-      //
-      //  $ngView.find('a').eq(non_active_tab_index).click();
-      //  timeout.flush();
-      //
-      //  expect(spy).toHaveBeenCalledWith(another_tab.route);
-      //  expect(get_current_state()).not.toEqual(previous_state);
-      //  expect(update_tabs_spy).toHaveBeenCalled();
-      //});
-      //
-      //it('should unbind the stateChangeSuccess event binding once the controller with the tabs is destroyed', function() {
-      //  scope.$destroy();
-      //
-      //  var another_tab = 'notabs';
-      //  state.go(another_tab);
-      //  timeout.flush();
-      //
-      //  expect(update_tabs_spy).not.toHaveBeenCalled();
-      //});
+      it('should not show the spinner when a route not matching the rootState is triggered', function() {
+
+        expect(spinnerIsHidden()).toBeTruthy();
+
+        state.go('other');
+
+        scope.$digest();
+
+        expect(spinnerIsVisible()).toBeFalsy();
+
+        defer.resolve();
+        scope.$digest();
+
+        expect(state.current.name).toEqual('other');
+      });
     }
   );
 })();

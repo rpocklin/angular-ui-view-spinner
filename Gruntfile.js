@@ -96,11 +96,11 @@ module.exports = function(grunt) {
   grunt.registerTask('serve', ['build','connect', 'watch']);
 
   grunt.registerTask('build', [
-     'sass', 'jsbeautifier', 'jshint', //'karma'
+     'sass', 'jsbeautifier', 'jshint', 'karma'
   ]);
 
   grunt.registerTask('default', [
     'build',
-    //'coveralls'
+    'coveralls'
   ]);
 };
