@@ -86,7 +86,7 @@ Complete (minimal) example:
 
 ## History
 
-1.0.0 Initial release
+* 1.0.0 Initial release
 
 ## TODO
 1. Your feature here
