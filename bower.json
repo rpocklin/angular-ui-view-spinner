@@ -18,6 +18,7 @@
     "*.yml",
     ".jshintrc",
     "node_modules",
+    "src/*.spec.js",
     "bower_components",
     "example",
     "Gruntfile.js",
