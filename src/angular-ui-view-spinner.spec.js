@@ -9,6 +9,23 @@
     }
   };
 
+  var $ng_view;
+  var directive_scope;
+
+  var create_view = function(html, scope) {
+
+    inject(
+      function($compile) {
+        $ng_view = $compile(html)(scope);
+      }
+    );
+
+    scope.$digest();
+    directive_scope = $ng_view.isolateScope();
+
+    return $ng_view;
+  };
+
   beforeEach(
     function() {
 
@@ -58,9 +75,8 @@
   describe(
     'Directive : UI Router : View Spinner', function() {
 
-      var root_scope, scope, directive_scope, view, element, state, spy, q;
-      var createView, get_current_state, spinnerIsHidden, spinnerIsVisible, viewIsVisible;
-      var $ngView;
+      var root_scope, scope, view, state, spy, q;
+      var get_current_state, spinnerIsHidden, spinnerIsVisible, viewIsVisible;
 
       beforeEach(
         inject(
@@ -68,22 +84,6 @@
 
             q = $q;
             defer = $q.defer();
-
-            createView = function(html, scope) {
-              element = angular.element(view);
-
-              inject(
-                function($compile) {
-                  $ngView = $compile(html)(scope);
-                }
-              );
-
-              scope.$digest();
-              directive_scope = $ngView.isolateScope();
-
-              return $ngView;
-            };
-
             scope = $rootScope.$new();
             state = $state;
 
@@ -94,14 +94,14 @@
             };
 
             view = '<ui-loading-view root-state="menu"></ui-loading-view>';
-            $ngView = createView(view, scope);
+            $ng_view = create_view(view, scope);
 
             spinnerIsHidden = function() {
-              return $ngView.find('.view-loading-spinner').hasClass('ng-hide');
+              return $ng_view.find('.view-loading-spinner').hasClass('ng-hide');
             };
 
             viewIsVisible = function() {
-              return !$ngView.find('div[ui-view]').find('div[ui-view]').hasClass('ng-hide');
+              return !$ng_view.find('div[ui-view]').find('div[ui-view]').hasClass('ng-hide');
             };
 
             spinnerIsVisible = function() {
@@ -118,8 +118,15 @@
         )
       );
 
-      xit('should define the view spinner directive with isolated scope', function() {
+      it('should define the view spinner directive with isolated scope', function() {
         expect(directive_scope).toBeDefined();
+      });
+
+      it('should throw an error when specifying an incorrect size value', function() {
+        view = '<ui-loading-view size="smallish"></ui-loading-view>';
+        expect(function() {
+          create_view(view, scope);
+        }).toThrow();
       });
 
       it('should show the spinner when a new child route is being loaded', function() {

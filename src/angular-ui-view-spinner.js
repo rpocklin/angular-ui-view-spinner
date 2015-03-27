@@ -4,7 +4,7 @@
 
   angular.module('angular-ui-view-spinner', []);
 
-  //  http://www.technofattie.com/2014/07/27/easy-loading-indicator-when-switching-views-in-angular.html
+  // http://www.technofattie.com/2014/07/27/easy-loading-indicator-when-switching-views-in-angular.html
   // tokenises the string from the last index of the separator back
 
   var strLeftBack = function(str, separator) {
@@ -55,7 +55,6 @@
           },
 
           compile: function(elem, attrs) {
-
             return {
               post: function(scope, elem, attrs) {
 
@@ -87,13 +86,7 @@
 
                 scope.showSpinner = function() {
                   return scope.isSpinnerEnabled() || scope.isNextRouteLoading();
-                  // TODO: remove
-                  //return true;
                 };
-
-                // TODO: make this configurable
-                var SHOW_SPINNER_DELAY_ON_FIRST_PAGE_LOAD = 250;
-                /* msec */
 
                 // keeps track of stateChange events in directive to unbind on destroy
                 var boundEvents = [];
@@ -102,7 +95,6 @@
 
                   scope._unbindClearSpinnerSettings = $timeout(
                     function() {
-                      console.log('cleared');
                       scope.spinnerEnabled = false;
                       scope.globalRoute = false;
 
@@ -110,7 +102,6 @@
                       scope.nextRouteLoading = false;
                     }, 0, true
                   );
-
                 };
 
                 var setSpinnerLoadingSettings = function(scope, to, parentTo, isGlobalLoading) {
@@ -121,8 +112,8 @@
 
                 var updateSpinnerState = function(scope, fromState, toState, routeLoadingState) {
 
-                  var from = fromState.name;
-                  var to = toState.name;
+                  var from = fromState ? fromState.name : '';
+                  var to = toState ? toState.name : '';
 
                   var parentFrom = strLeftBack(from, '.');
                   var parentTo = strLeftBack(to, '.');
@@ -153,11 +144,9 @@
                   if (isGlobalLoading && !rootState) {
 
                     if (routeLoadingState) {
-                      //console.log('global route');
                       setSpinnerLoadingSettings(scope, to, parentTo, isGlobalLoading);
                     }
                     else {
-                      console.log('global clear');
                       clearSpinnerSettings(isGlobalLoading);
                     }
 
@@ -180,7 +169,6 @@
                 boundEvents.push(
                   $rootScope.$on(
                     '$stateChangeError', function(event, toState, toParams, fromState, fromParams) {
-                      console.log('cancelled');
                       updateSpinnerState(scope, fromState, toState, false);
                     }
                   )
@@ -190,8 +178,8 @@
                   $rootScope.$on(
                     '$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams) {
 
-                      var from = fromState.name;
-                      var to = toState.name;
+                      var from = fromState ? fromState.name : '';
+                      var to = toState ? toState.name : '';
 
                       var parentFrom = strLeftBack(from, '.');
                       var parentTo = strLeftBack(to, '.');
@@ -208,8 +196,8 @@
                     '$stateChangeStart', function(event, toState, toParams, fromState, fromParams) {
 
                       // if fromState = 'example' || toState = sibling
-                      var from = fromState.name;
-                      var to = toState.name;
+                      var from = fromState ? fromState.name : '';
+                      var to = toState ? toState.name : '';
 
                       var parentFrom = strLeftBack(from, '.');
                       var parentTo = strLeftBack(to, '.');
@@ -222,12 +210,11 @@
                 );
 
                 var cancelCurrentSpinner = function() {
+
                   //prevents multiple route changes causing problems
                   angular.forEach(
           [scope._unbindClearSpinnerSettings], function(timeoutEvent) {
-                      console.log(timeoutEvent);
                       if (timeoutEvent) {
-                        console.log('cancelling');
                         $timeout.cancel(timeoutEvent);
                       }
                     }
@@ -238,7 +225,7 @@
 
                   angular.forEach(
                     boundEvents, function(unbindEventListener) {
-                      unbindEventListener(); // unbinds listener events
+                      unbindEventListener();
                     }
                   );
 
@@ -269,6 +256,7 @@
   );
 })();
 
+// future tests
 // example.two.b -> example.one (should show rootstate=example spinner only)
 // example.one -> example.two.b (should show rootstate=example spinner only)
 // example.two.b -> example.one.a (should show rootstate=example.two spinner only)

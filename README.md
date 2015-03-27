@@ -1,5 +1,8 @@
 # Angular UI View Spinner
 
+[![Build Status](https://secure.travis-ci.org/rpocklin/angular-ui-view-spinner.svg)](http:/travis-ci.org/rpocklin/angular-ui-view-spinner)
+[![Coverage Status](https://coveralls.io/repos/rpocklin/angular-ui-view-spinner/badge.svg)](https://coveralls.io/r/rpocklin/angular-ui-view-spinner)
+
 A declarative, powerful drop-in addition to UI Router, enabling spinners to be shown when executing `resolves` before
 the route change is complete.
 

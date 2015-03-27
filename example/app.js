@@ -9,7 +9,7 @@
 		'example', ['angularSpinner', 'ui.router', 'angular-ui-view-spinner']
 	);
 
-	app.config(
+	app.config(['$stateProvider',
 		function($stateProvider) {
 			$stateProvider.state(
 				'example', {
@@ -53,6 +53,6 @@
 					}
 				}
 			);
-		}
+		}]
 	);
 })();
