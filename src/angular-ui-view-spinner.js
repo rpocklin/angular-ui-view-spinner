@@ -168,7 +168,8 @@
 
                 boundEvents.push(
                   $rootScope.$on(
-                    '$stateChangeError', function(event, toState, toParams, fromState, fromParams) {
+                    '$stateChangeError',
+                    function(event, toState, toParams, fromState, fromParams) {
                       updateSpinnerState(scope, fromState, toState, false);
                     }
                   )
@@ -176,7 +177,8 @@
 
                 boundEvents.push(
                   $rootScope.$on(
-                    '$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams) {
+                    '$stateChangeSuccess',
+                    function(event, toState, toParams, fromState, fromParams) {
 
                       var from = fromState ? fromState.name : '';
                       var to = toState ? toState.name : '';
@@ -193,7 +195,8 @@
 
                 boundEvents.push(
                   $rootScope.$on(
-                    '$stateChangeStart', function(event, toState, toParams, fromState, fromParams) {
+                    '$stateChangeStart',
+                    function(event, toState, toParams, fromState, fromParams) {
 
                       // if fromState = 'example' || toState = sibling
                       var from = fromState ? fromState.name : '';
@@ -213,7 +216,8 @@
 
                   //prevents multiple route changes causing problems
                   angular.forEach(
-          [scope._unbindClearSpinnerSettings], function(timeoutEvent) {
+          [scope._unbindClearSpinnerSettings],
+                    function(timeoutEvent) {
                       if (timeoutEvent) {
                         $timeout.cancel(timeoutEvent);
                       }
@@ -224,7 +228,8 @@
                 var unbindEvents = function() {
 
                   angular.forEach(
-                    boundEvents, function(unbindEventListener) {
+                    boundEvents,
+                    function(unbindEventListener) {
                       unbindEventListener();
                     }
                   );
@@ -233,7 +238,8 @@
                 };
 
                 scope.$on(
-                  '$destroy', function() {
+                  '$destroy',
+                  function() {
                     unbindEvents();
                   }
                 );

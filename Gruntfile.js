@@ -39,7 +39,7 @@ module.exports = function(grunt) {
     jsbeautifier: {
       files:   ['!Gruntfile.js', '!npm-shrinkwrap.json', 'src/**/*.{html,js}', '!app/bower_components/**/*'],
       options: {
-        //mode: 'VERIFY_ONLY',
+        mode: 'VERIFY_ONLY',
         js:   {
           'indent_size':               2,
           'indent_char':               ' ',

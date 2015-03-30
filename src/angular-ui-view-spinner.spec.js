@@ -11,12 +11,14 @@
 
   var $ng_view;
   var directive_scope;
+  var $timeout;
 
   var create_view = function(html, scope) {
 
     inject(
-      function($compile) {
+      function($compile, _$timeout_) {
         $ng_view = $compile(html)(scope);
+        $timeout = _$timeout_;
       }
     );
 
@@ -38,7 +40,7 @@
             'menu', {
               url: '/menu',
               template: '<div>menu</div>'
-              /* no resolve */
+                /* no resolve */
             }
           ).state(
             'other', {
@@ -73,10 +75,12 @@
   );
 
   describe(
-    'Directive : UI Router : View Spinner', function() {
+    'Directive : UI Router : View Spinner',
+    function() {
 
       var root_scope, scope, view, state, spy, q;
       var get_current_state, spinnerIsHidden, spinnerIsVisible, viewIsVisible;
+      var unbind_events = [];
 
       beforeEach(
         inject(
@@ -118,6 +122,12 @@
         )
       );
 
+      afterEach(function() {
+        angular.forEach(unbind_events, function(unbind_event) {
+          unbind_event();
+        });
+      });
+
       it('should define the view spinner directive with isolated scope', function() {
         expect(directive_scope).toBeDefined();
       });
@@ -137,14 +147,13 @@
         scope.$digest();
 
         expect(spinnerIsVisible()).toBeTruthy();
-
         expect(state.current.name).not.toEqual('menu.route1');
 
         defer.resolve();
-        scope.$digest();
+        $timeout.flush();
 
         expect(viewIsVisible()).toBeTruthy();
-
+        expect(spinnerIsHidden()).toBeTruthy();
         expect(state.current.name).toEqual('menu.route1');
       });
 
@@ -156,14 +165,16 @@
 
         defer = q.defer();
         state.go('menu.route2');
+        scope.$digest();
 
+        expect(spinnerIsVisible()).toBeTruthy();
         expect(state.current.name).not.toEqual('menu.route2');
 
         defer.resolve();
-        scope.$digest();
+        $timeout.flush();
 
         expect(viewIsVisible()).toBeTruthy();
-
+        expect(spinnerIsHidden()).toBeTruthy();
         expect(state.current.name).toEqual('menu.route2');
       });
 
@@ -172,15 +183,51 @@
         expect(spinnerIsHidden()).toBeTruthy();
 
         state.go('other');
-
         scope.$digest();
 
         expect(spinnerIsVisible()).toBeFalsy();
 
         defer.resolve();
+        $timeout.flush();
+
+        expect(spinnerIsHidden()).toBeTruthy();
+        expect(state.current.name).toEqual('other');
+      });
+
+      it('should hide the spinner when a $stateChangeError event is triggered', function() {
+
+        expect(spinnerIsHidden()).toBeTruthy();
+
+        state.go('menu.route1');
         scope.$digest();
 
-        expect(state.current.name).toEqual('other');
+        expect(spinnerIsVisible()).toBeTruthy();
+        expect(state.current.name).not.toEqual('menu.route1');
+
+        defer.reject();
+        $timeout.flush();
+
+        expect(spinnerIsHidden()).toBeTruthy();
+        expect(state.current.name).not.toEqual('menu.route1');
+      });
+
+      // Add with sibling code in angular-ui-view-spinner.js upon next release of ui-router
+      xit('should hide the spinner when a $stateChangeCancel event is triggered', function() {
+
+        expect(spinnerIsHidden()).toBeTruthy();
+
+        unbind_events.push(root_scope.$on(
+          '$stateChangeStart',
+          function(event, toState, toParams, fromState, fromParams) {
+            event.preventDefault();
+          }
+        ));
+
+        state.go('menu.route1');
+        $timeout.flush();
+
+        expect(spinnerIsHidden()).toBeTruthy();
+        expect(state.current.name).not.toEqual('menu.route1');
       });
     }
   );
