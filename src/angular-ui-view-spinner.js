@@ -39,6 +39,7 @@
 
   // TODO: Sometimes we don't receive inital stateChangeSuccess so spinner stays on initially
   // TODO: Review https://github.com/facultymatt/angular-unsavedChanges and do something similiar to fix this timing issue
+  // TODO: Decide if targetting initial angular bootstrap spinner as well (or strip out that code).
   angular.module('angular-ui-view-spinner').directive(
     'uiLoadingView', ['$rootScope', '$timeout',
 

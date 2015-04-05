@@ -7,10 +7,10 @@ A declarative, powerful drop-in addition to UI Router, enabling spinners to be s
 the route change is complete.
 
 **Motivation**: Global spinners suck, UX and humans desire to know what part of the screen is loading.  UI Router gives
-us the hooks we need and this directive is the easiest *drop-in* replacement to complicated or global loading indicators.
+us the hooks we need and this directive is the easiest *drop-in* replacement to complicated per-view or global loading indicators.
 
 Most importantly, this works as you nest multiple `<ui-view>` elements, and comes with a good set of defaults to
-not show if the data is loaded within a certain amount of time (avoids spinner flashes).
+not show if the data is loaded within a certain amount of time (avoids the spinner being flashed on /off).
 
 
 # Demo / Example
@@ -38,14 +38,14 @@ not show if the data is loaded within a certain amount of time (avoids spinner f
 
 1. Ensure that the other Angular.js module dependencies are included:
 
-  `var myapp = angular.module('myapp', ['angularSpinner', 'ui.router', 'angular-ui-view-spinner']);`
+  `var myapp = angular.module('myapp', ['angularSpinner', 'ui.router' .. ]);`
 
 ## Creating the Directive
 
-1. [ required ] Replace `<ui-view ...>` or `<div ui-view ...>` with `<ui-loading-view ...>` or `<div ui-loading-view ...>`.
-1. [ required ] Define the root-state for that `<ui-loading-view>` based on the parents route.
-1. [ optional ] Specify the preset size of the spinner `size="small | medium | large"`.
-1. [ optional ] Customise the `angularSpinner` spinner dimensions directly: `spinner-size="{ radius: 50, width: 10, length: 60 }"`.
+1. [ *required* ] Replace `<ui-view ...>` or `<div ui-view ...>` with `<ui-loading-view ...>` or `<div ui-loading-view ...>`.
+1. [ *required* ] Define the root-state for that `<ui-loading-view>` based on the parents route.
+1. [ *optional* ] Specify the preset size of the spinner `size="small | medium | large"`.
+1. [ *optional* ] Customise the `angularSpinner` spinner dimensions directly: `spinner-size="{ radius: 50, width: 10, length: 60 }"`.
 
 NOTE: The spinner will appear on any view where you have `resolve:` defined with an async loader, whether it's one async request or many.
 
@@ -63,7 +63,7 @@ Complete (minimal) example:
 
 ## Notes
 
-- You can use either the SASS styles directly file under `/src` or the compiled CSS files, up to you :)
+- You can use either the SASS styles directly file under `/src` or the compiled CSS files, up to you.
 - You may wish to customise the `margin-top` of the spinner to the `<ui-view>` containers,
   or use flex-box or another method to vertically center the spinner but it depends which browsers / versions you are 
   targeting - the default is `margin-top: 50px`.

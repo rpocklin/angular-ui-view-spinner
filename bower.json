@@ -11,7 +11,7 @@
   "license": "MIT",
   "main": "src/angular-ui-view-spinner.js",
   "keywords": [
-    "angular, ui router, spinner, loading, wait, resolve"
+    "angular, ui router, spinner, loading, wait, resolve, directive"
   ],
   "ignore": [
     "**/.*",
