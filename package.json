@@ -2,14 +2,14 @@
   "name": "angular-ui-view-spinner",
   "description": "A declarative way to show a loading spinner to users in the context of where the view will be shown.",
   "homepage": "https://github.com/rpocklin/angular-ui-view-spinner",
+  "author": "Robert Pocklington <rpocklin@gmail.com>",
   "repository": {
     "type": "git",
     "url": "http://github.com/rpocklin/angular-ui-view-spinner"
   },
   "keywords": [
-    "angular, confirm, confirmable, popup, warning, form, bootstrap"
+    "angular", "confirm", "confirmable", "popup", "warning", "form", "bootstrap"
   ],
-  "author": "Robert Pocklington <rpocklin@gmail.com>",
   "version": "1.0.0",
   "license": "MIT",
   "devDependencies": {

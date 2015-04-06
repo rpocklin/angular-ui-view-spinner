@@ -92,7 +92,8 @@ Complete (minimal) example:
 * 1.0.0 Initial release
 
 ## TODO
-1. Your feature here
+
+1. Cancel spinner on `$stateChangeCancel` events once [this commit](https://github.com/angular-ui/ui-router/commit/c6d67ed84edc9606ba61aa79dcbbd81b541bc2af) lands.
 
 ## License
 
