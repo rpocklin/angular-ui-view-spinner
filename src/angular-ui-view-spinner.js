@@ -93,6 +93,10 @@
                   return scope.isSpinnerEnabled() || scope.isNextRouteLoading();
                 };
 
+	              scope.isAutoscroll = function() {
+		              return scope.$eval('autoscroll');
+	              };
+
                 // keeps track of stateChange events in directive to unbind on destroy
                 var boundEvents = [];
 
@@ -271,7 +275,7 @@
         var DEFAULT_TEMPLATE = '<div class="view-loading-spinner-container">' +
           '<div class="view-loading-spinner fadein obscure delay-fadein no-fadeout" ' +
           'ng-hide="!showSpinner()" us-spinner="spinnerSettings" spinner-start-active="1"></div></div>' +
-          '<div ui-view name="{{name}}" autoscroll="{{autoscroll}}" ng-hide="!showView()"></div></div>';
+          '<div ui-view name="{{name}}" autoscroll="isAutoscroll()" ng-hide="!showView()"></div></div>';
 
         $templateCache.put('angular-ui-view-spinner.html', DEFAULT_TEMPLATE);
   }]
