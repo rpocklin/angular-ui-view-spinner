@@ -93,9 +93,9 @@
                   return scope.isSpinnerEnabled() || scope.isNextRouteLoading();
                 };
 
-	              scope.isAutoscroll = function() {
-		              return scope.$eval('autoscroll');
-	              };
+                scope.isAutoscroll = function() {
+                  return scope.$eval('autoscroll');
+                };
 
                 // keeps track of stateChange events in directive to unbind on destroy
                 var boundEvents = [];
