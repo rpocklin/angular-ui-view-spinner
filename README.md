@@ -80,7 +80,7 @@ Complete (minimal) example:
 
 ## Running Locally
 
-1. Checkout git repository locally: ```git clone git@github.com:rpocklin/angular-ui-view-spinner.git`
+1. Checkout git repository locally: `git clone git@github.com:rpocklin/angular-ui-view-spinner.git`
 1. `npm install`
 1. `bower install`
 1. `grunt serve`
@@ -103,7 +103,7 @@ Complete (minimal) example:
 
 ## TODO
 
-1. Cancel spinner on `$stateChangeCancel` events once [this commit](https://github.com/angular-ui/ui-router/commit/c6d67ed84edc9606ba61aa79dcbbd81b541bc2af) lands.
+1. Investigate showing a spinner while angular bootstraps and loads initially (on initial route lifecycle).
 
 ## License
 
