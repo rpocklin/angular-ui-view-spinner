@@ -211,14 +211,15 @@
         expect(state.current.name).not.toEqual('menu.route1');
       });
 
-      // Add with sibling code in angular-ui-view-spinner.js upon next release of ui-router
-      xit('should hide the spinner when a $stateChangeCancel event is triggered', function() {
+      it('should hide the spinner when a $stateChangeCancel event is triggered', function() {
 
         expect(spinnerIsHidden()).toBeTruthy();
 
         unbind_events.push(root_scope.$on(
           '$stateChangeStart',
           function(event, toState, toParams, fromState, fromParams) {
+
+            // triggers $stateChangeCancel event
             event.preventDefault();
           }
         ));
@@ -229,6 +230,18 @@
         expect(spinnerIsHidden()).toBeTruthy();
         expect(state.current.name).not.toEqual('menu.route1');
       });
+
+      // example.two.b -> example.one (should show rootstate=example spinner only)
+      // example.one -> example.two.b (should show rootstate=example spinner only)
+      // example.two.b -> example.one.a (should show rootstate=example.two spinner only)
+      // example.two.a -> example.one.b (should show rootstate=example.two spinner only)
+
+      // if parentFrom || parentTo == rootState this is the active one
+      // if parentFrom == rootState show it (going down a level)
+      // if parentFrom.length > parentTo.length && parentTo == rootState show it
+      // if parentTo.length > parentFrom.length && parentFrom == rootState show it
+
+      // need showView method
     }
   );
 })();

@@ -22,23 +22,33 @@ not show if the data is loaded within a certain amount of time (avoids the spinn
 
 1. Install the plugin into your Angular.js project, manually or via:
 
-  `bower install angular-ui-view-spinner --save`
+  ```sh
+  bower install angular-ui-view-spinner --save
+  ```
 
 1. Include `angular-ui-view-spinner.css` in your app:
 
-  `<link rel="stylesheet" href="bower_components/angular-ui-view-spinner/angular-ui-view-spinner.css" />`
+  ```html
+  <link rel="stylesheet" href="bower_components/angular-ui-view-spinner/angular-ui-view-spinner.css" />
+  ```
 
 1. Include `angular-ui-view-spinner.js` in your app:
 
-  `<script src="bower_components/angular-ui-view-spinner/angular-ui-view-spinner.js"></script>`
+  ```javascript
+  <script src="bower_components/angular-ui-view-spinner/angular-ui-view-spinner.js"></script>
+  ```
 
 1. Add `angular-ui-view-spinner` as a new module dependency in your angular app.
 
-  `var myapp = angular.module('myapp', ['angular-ui-view-spinner']);`
+  ```javascript
+  var myapp = angular.module('myapp', ['angular-ui-view-spinner']);
+  ```
 
 1. Ensure that the other Angular.js module dependencies are included:
 
-  `var myapp = angular.module('myapp', ['angularSpinner', 'ui.router' .. ]);`
+  ```javascript
+  var myapp = angular.module('myapp', ['angularSpinner', 'ui.router' .. ]);
+  ```
 
 ## Creating the Directive
 
@@ -70,7 +80,7 @@ Complete (minimal) example:
 
 ## Running Locally
 
-1. Checkout git repository locally: `git clone git@github.com:rpocklin/angular-ui-view-spinner.git`
+1. Checkout git repository locally: ```git clone git@github.com:rpocklin/angular-ui-view-spinner.git`
 1. `npm install`
 1. `bower install`
 1. `grunt serve`

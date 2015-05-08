@@ -2,8 +2,6 @@
 
   'use strict';
 
-  angular.module('angular-ui-view-spinner', []);
-
   // http://www.technofattie.com/2014/07/27/easy-loading-indicator-when-switching-views-in-angular.html
   // tokenises the string from the last index of the separator back
 
@@ -37,10 +35,11 @@
     'large': SPINNER_SETTINGS_LARGE
   };
 
-  // TODO: Sometimes we don't receive inital stateChangeSuccess so spinner stays on initially
+  // TODO: Sometimes we don't receive initial stateChangeSuccess so spinner stays on initially (global or in-line view)
   // TODO: Review https://github.com/facultymatt/angular-unsavedChanges and do something similiar to fix this timing issue
   // TODO: Decide if targetting initial angular bootstrap spinner as well (or strip out that code).
-  angular.module('angular-ui-view-spinner').directive(
+
+  angular.module('angular-ui-view-spinner', []).directive(
     'uiLoadingView', ['$rootScope', '$timeout',
 
    function($rootScope, $timeout) {
@@ -49,6 +48,11 @@
           priority: 1000,
           restrict: 'EA',
           scope: {
+
+            name: '@?',
+            autoscroll: '@?',
+            /* onload parameter not prohibited due to angular blacklisting this attribute for interpolation. */
+
             templateUrl: '@?', // alternative templateUrl to render
             rootState: '@?', // what is the parent base route for this view
             spinnerSettings: '@?', // optional spinner settings to override defaults
@@ -178,6 +182,15 @@
 
                 boundEvents.push(
                   $rootScope.$on(
+                    '$stateChangeCancel',
+                    function(event, toState, toParams, fromState, fromParams) {
+                      updateSpinnerState(scope, fromState, toState, false);
+                    }
+                  )
+                );
+
+                boundEvents.push(
+                  $rootScope.$on(
                     '$stateChangeSuccess',
                     function(event, toState, toParams, fromState, fromParams) {
 
@@ -215,9 +228,8 @@
 
                 var cancelCurrentSpinner = function() {
 
-                  //prevents multiple route changes causing problems
-                  angular.forEach(
-          [scope._unbindClearSpinnerSettings],
+                  // prevents multiple route changes causing problems
+                  angular.forEach([scope._unbindClearSpinnerSettings],
                     function(timeoutEvent) {
                       if (timeoutEvent) {
                         $timeout.cancel(timeoutEvent);
@@ -256,22 +268,12 @@
   ).run(
   ['$templateCache',
       function($templateCache) {
-        var DEFAULT_TEMPLATE = '<div class="view-loading-spinner-container">' + '<div class="view-loading-spinner fadein obscure delay-fadein no-fadeout" ' + 'ng-hide="!showSpinner()" ' + 'us-spinner="spinnerSettings" spinner-start-active="1"></div>' + '</div>' + '<div ui-view ng-hide="!showView()"></div>' + '</div>';
+        var DEFAULT_TEMPLATE = '<div class="view-loading-spinner-container">' +
+          '<div class="view-loading-spinner fadein obscure delay-fadein no-fadeout" ' +
+          'ng-hide="!showSpinner()" us-spinner="spinnerSettings" spinner-start-active="1"></div></div>' +
+          '<div ui-view name="{{name}}" autoscroll="{{autoscroll}}" ng-hide="!showView()"></div></div>';
 
         $templateCache.put('angular-ui-view-spinner.html', DEFAULT_TEMPLATE);
   }]
   );
 })();
-
-// future tests
-// example.two.b -> example.one (should show rootstate=example spinner only)
-// example.one -> example.two.b (should show rootstate=example spinner only)
-// example.two.b -> example.one.a (should show rootstate=example.two spinner only)
-// example.two.a -> example.one.b (should show rootstate=example.two spinner only)
-
-// if parentFrom || parentTo == rootState this is the active one
-// if parentFrom == rootState show it (going down a level)
-// if parentFrom.length > parentTo.length && parentTo == rootState show it.
-// if parentTo.length > parentFrom.length && parentFrom == rootState show it
-
-// need showView method
