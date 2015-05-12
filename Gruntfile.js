@@ -2,6 +2,8 @@
 
 module.exports = function(grunt) {
 
+	var beautifyFiles = ['!Gruntfile.js', '!npm-shrinkwrap.json', 'src/**/*.{html,js}', '!app/bower_components/**/*'];
+
   // Load grunt tasks automatically
   require('load-grunt-tasks')(grunt);
 
@@ -36,30 +38,22 @@ module.exports = function(grunt) {
     },
 
     // verifies we have formatted our js and HTML according to our style conventions
-    jsbeautifier: {
-      files:   ['!Gruntfile.js', '!npm-shrinkwrap.json', 'src/**/*.{html,js}', '!app/bower_components/**/*'],
-      options: {
-        mode: 'VERIFY_ONLY',
-        js:   {
-          'indent_size':               2,
-          'indent_char':               ' ',
-          'indent_level':              0,
-          'indent_with_tabs':          false,
-          'preserve_newlines':         true,
-          'max_preserve_newlines':     2,
-          'jslint_happy':              false,
-          'brace_style':               'end-expand',
-          'indent_scripts':            'keep',
-          'keep_array_indentation':    true,
-          'keep_function_indentation': false,
-          'space_before_conditional':  true,
-          'break_chained_methods':     false,
-          'eval_code':                 false,
-          'unescape_strings':          false,
-          'wrap_line_length':          0
-        }
-      }
-    },
+	  jsbeautifier: {
+		  verify : {
+			  src:   beautifyFiles,
+			  options: {
+				  config: '.jsbeautifyrc',
+				  mode: 'VERIFY_ONLY'
+			  }
+		  },
+		  update: {
+			  src:   beautifyFiles,
+			  options: {
+				  config: '.jsbeautifyrc'
+			  }
+		  }
+	  },
+
 
     // Make sure code styles are up to par and there are no obvious mistakes
     jshint:       {
@@ -94,13 +88,21 @@ module.exports = function(grunt) {
   });
 
   grunt.registerTask('serve', ['build','connect', 'watch']);
+	grunt.registerTask('beautify', ['jsbeautifier:update']);
 
-  grunt.registerTask('build', [
-     'sass', 'jsbeautifier', 'jshint', 'karma'
+	grunt.registerTask('build', [
+     'sass', 'jsbeautifier:verify', 'jshint', 'karma'
   ]);
 
   grunt.registerTask('default', [
     'build',
     'coveralls'
   ]);
+
+	grunt.registerTask('serve', ['connect', 'watch']);
+	grunt.registerTask('beautify', ['jsbeautifier:update']);
+	grunt.registerTask('default', [
+		'jsbeautifier:verify', 'jshint', 'karma', 'coveralls'
+	]);
+
 };
