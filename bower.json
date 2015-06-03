@@ -9,7 +9,7 @@
   "repository": "git://github.com/rpocklin/angular-ui-view-spinner.git",
   "version": "1.0.0",
   "license": "MIT",
-  "main": "src/angular-ui-view-spinner.js",
+  "main": [ "src/angular-ui-view-spinner.js", "src/angular-ui-view-spinner.css" ],
   "keywords": [
     "angular, ui router, spinner, loading, wait, resolve, directive"
   ],

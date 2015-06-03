@@ -29,13 +29,13 @@ not show if the data is loaded within a certain amount of time (avoids the spinn
 1. Include `angular-ui-view-spinner.css` in your app:
 
   ```html
-  <link rel="stylesheet" href="bower_components/angular-ui-view-spinner/angular-ui-view-spinner.css" />
+  <link rel="stylesheet" href="bower_components/angular-ui-view-spinner/src/angular-ui-view-spinner.css" />
   ```
 
 1. Include `angular-ui-view-spinner.js` in your app:
 
   ```javascript
-  <script src="bower_components/angular-ui-view-spinner/angular-ui-view-spinner.js"></script>
+  <script src="bower_components/angular-ui-view-spinner/src/angular-ui-view-spinner.js"></script>
   ```
 
 1. Add `angular-ui-view-spinner` as a new module dependency in your angular app.
@@ -104,6 +104,7 @@ Complete (minimal) example:
 ## TODO
 
 1. Investigate showing a spinner while angular bootstraps and loads initially (on initial route lifecycle).
+2. Allow this to be used with a pure icon and CSS instead of `angularSpinner` (via transclude).
 
 ## License
 

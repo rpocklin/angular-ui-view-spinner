@@ -4,26 +4,38 @@
   /* ensure it sits above all content */
   z-index: 10000;
   /* reference position of spinner */
-  position: relative; }
-  .view-loading-spinner-container .view-loading-spinner {
-    /* centers spinner irrespective of its size */
-    transform: translate(-50%, -50%);
-    left: 50%;
-    top: 50%;
-    position: absolute; }
+  position: relative;
+}
+
+.view-loading-spinner-container .view-loading-spinner {
+  /* centers spinner irrespective of its size */
+  transform: translate(-50%, -50%);
+  left: 50%;
+  top: 50%;
+  position: absolute;
+}
 
 /* use to fade in and out sections of HTML using the ng-hide directive */
 .obscure {
-  opacity: 0; }
+  opacity: 0;
+}
 
 /* smooth transitions */
 .fadein {
   opacity: 1;
-  transition: all 0.5s ease; }
-  .fadein.ng-hide {
-    opacity: 0;
-    display: block !important; }
-  .fadein.delay-fadein {
-    transition: all 1s 0.3s ease !important; }
-  .fadein.no-fadeout.ng-hide {
-    transition: none !important; }
+  transition: all 0.5s ease;
+}
+
+.fadein.ng-hide {
+  opacity: 0;
+  display: block !important;
+}
+
+.fadein.delay-fadein {
+  transition: all 1s 0.3s ease !important;
+}
+
+.fadein.no-fadeout.ng-hide {
+  transition: none !important;
+}
+
