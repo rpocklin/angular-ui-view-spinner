@@ -7,6 +7,11 @@
     "type": "git",
     "url": "http://github.com/rpocklin/angular-ui-view-spinner"
   },
+  "repository": {
+    "type": "git",
+    "url": "http://github.com/rpocklin/angular-ui-view-spinner.git"
+  },
+  "main": ["src/angular-ui-view-spinner.js", "src/angular-ui-view-spinner.css"],
   "keywords": [
     "angular", "confirm", "confirmable", "popup", "warning", "form", "bootstrap"
   ],
