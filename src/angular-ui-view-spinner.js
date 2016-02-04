@@ -51,7 +51,7 @@
 
             name: '@?',
             autoscroll: '@?',
-            /* onload parameter not prohibited due to angular blacklisting this attribute for interpolation. */
+            /* onload parameter prohibited due to angular blacklisting this attribute for interpolation. */
 
             templateUrl: '@?', // alternative templateUrl to render
             rootState: '@?', // what is the parent base route for this view

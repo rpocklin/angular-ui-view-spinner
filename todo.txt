@@ -1,0 +1,9 @@
+Add gulp
+Make HTML templated
+automate gh-pages?
+jbeautify add gulp beautify
+src / dist directories
+
+background image
+no nested state requirement?
+add some dynamic text
